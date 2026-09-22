@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PHILOSOPHY PERFORMANCE TASK</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Special Elite (Typewriter) & Courier Prime (Monospace) - NO CURSIVE -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Special+Elite&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Custom Fonts (Strictly Non-Cursive Typewriter & Monospace) */
+        .font-typewriter {
+            font-family: 'Special Elite', 'Courier New', Courier, monospace;
+        }
+        .font-courier {
+            font-family: 'Courier Prime', monospace;
+        }
+        /* Background Pattern & Scrapbook Base */
+        body {
+            background-color: #f2ebd9;
+            background-image: radial-gradient(#d5c8b2 1.2px, transparent 1.2px);
+            background-size: 24px 24px;
+            color: #000000;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+        /* Scrapbook Paper Texture Effect */
+        .paper-texture {
+            background-color: #faf6ee;
+            background-image: linear-gradient(0deg, rgba(210,190,165,0.14) 1px, transparent 1px);
+            background-size: 100% 28px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08), inset 0 0 80px rgba(180,150,110,0.15);
+        }
+        /* Landscape Polaroid Style - Pure Image Frame (No Text inside) */
+        .polaroid-landscape {
+            background: #ffffff;
+            padding: 12px 12px 16px 12px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.12), 0 2px 5px rgba(0,0,0,0.08);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform-origin: center center;
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .polaroid-landscape:hover {
+            transform: scale(1.08) rotate(0deg) translateY(-8px) !important;
+            z-index: 40 !important;
+            box-shadow: 0 20px 35px rgba(0,0,0,0.22);
+        }
+        /* Vintage Washi Tape Strip */
+        .washi-tape {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%) rotate(-1deg);
+            width: 80px;
+            height: 22px;
+            background: rgba(220, 205, 175, 0.75);
+            border-left: 2px dashed rgba(180, 160, 130, 0.6);
+            border-right: 2px dashed rgba(180, 160, 130, 0.6);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            backdrop-filter: blur(1px);
+            z-index: 20;
+        }
+        /* Realistic Envelope Styling */
+        .realistic-envelope {
+            position: relative;
+            background: linear-gradient(145deg, #f7f3e8 0%, #ece2cd 100%);
+            border: 1px solid #dcd1ba;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.08), inset 0 0 12px rgba(255,255,255,0.6);
+            transition: all 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+            cursor: pointer;
+            aspect-ratio: 4 / 3;
+            overflow: hidden;
+            border-radius: 3px;
+        }
+        /* Flap & Crease Lines for Envelope Realism */
+        .realistic-envelope::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 58%;
+            background: linear-gradient(180deg, rgba(255,255,255,0.45) 0%, rgba(0,0,0,0.04) 100%);
+            clip-path: polygon(0 0, 100% 0, 50% 100%);
+            border-bottom: 1px solid rgba(0,0,0,0.08);
+            z-index: 1;
+        }
+        .realistic-envelope::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 100%;
+            background: transparent;
+            clip-path: polygon(0 100%, 50% 50%, 100% 100%);
+            box-shadow: inset 0 -2px 8px rgba(0,0,0,0.05);
+            z-index: 1;
+        }
+        /* 3D Wax Seal Effect with Heart Detail */
+        .wax-seal {
+            position: absolute;
+            top: 48%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 34px;
+            height: 34px;
+            background: radial-gradient(circle at 35% 35%, #b91c1c, #7f1d1d);
+            border-radius: 50%;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.35), inset 0 2px 4px rgba(255, 255, 255, 0.3);
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fca5a5;
+            font-size: 12px;
+            border: 1px solid #991b1b;
+            transition: transform 0.3s ease;
+        }
+        .realistic-envelope:hover {
+            transform: translateY(-8px) scale(1.05);
+            box-shadow: 0 15px 25px rgba(60, 40, 20, 0.18), 0 3px 6px rgba(0,0,0,0.1);
+        }
+        .realistic-envelope:hover .wax-seal {
+            transform: translate(-50%, -50%) scale(1.18) rotate(6deg);
+        }
+        /* Scrapbook Pop Up Animation */
+        @keyframes scrapbookPopUp {
+            0% {
+                opacity: 0;
+                transform: translateY(30px) scale(0.96);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+        .animate-scrapbook-up {
+            animation: scrapbookPopUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+        /* Typewriter Cursor */
+        .typewriter-cursor::after {
+            content: '|';
+            animation: blink 0.8s infinite;
+            font-weight: bold;
+            color: #000000;
+        }
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+        /* Custom Scrollbar for Essay Modal */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #e6decb; }
+        ::-webkit-scrollbar-thumb { background: #a89377; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #7a664d; }
+
+        /* Cabahug Style Font Color Classes (STRICTLY FOR CABAHUG) */
+        .cabahug-meta { color: #1a2a3a; font-weight: bold; }
+        .cabahug-title { color: #1e3a8a; font-weight: bold; }
+        .cabahug-text-blue { color: #1e40af; }
+        .cabahug-text-teal { color: #0f766e; }
+        .cabahug-text-wine { color: #9f1239; }
+        .cabahug-text-dark { color: #1f2937; }
+        .cabahug-signature { color: #312e81; font-weight: bold; }
+    </style>
+</head>
+<body class="font-typewriter min-h-screen text-black selection:bg-amber-200 selection:text-amber-900">
+    <!-- SECTION 1: HEADER & LANDING POLAROIDS -->
+    <section id="section1" class="pt-16 md:pt-24 pb-6 px-4 flex flex-col justify-between items-center relative">
+        
+        <!-- Header Information -->
+        <header class="text-center mt-2 z-10 max-w-3xl mx-auto space-y-3">
+            <h1 class="text-4xl md:text-6xl font-bold text-black tracking-tight leading-tight">
+                “One choice, Big impact.”
+            </h1>
+            <h2 class="text-xs md:text-sm uppercase tracking-[0.25em] font-courier text-[#78350f] font-bold">
+                PHILOSOPHY PERFORMANCE TASK
+            </h2>
+            <p class="text-xs md:text-sm font-courier text-black tracking-widest uppercase font-bold">
+                BY 12 HUMSS 2502
+            </p>
+            <p class="font-courier text-lg md:text-xl text-[#5c534a] font-semibold pt-1">
+                Welcome to our digital diary! :)
+            </p>
+        </header>
+
+        <!-- Overlapping Landscape Polaroids Display -->
+        <div class="w-full max-w-4xl my-8 py-2">
+            <div class="flex flex-col md:flex-row items-center justify-center -space-y-6 md:space-y-0 md:-space-x-8">
+                
+                <!-- LANDSCAPE POLAROID 1 -->
+                <div class="polaroid-landscape -rotate-6 w-80 md:w-72" onclick="scrollToSection2()">
+                    <div class="washi-tape"></div>
+                    <div class="overflow-hidden bg-stone-200 h-52 w-full rounded-sm border border-stone-200">
+                        <img src="file:///Users/macbookpro/Downloads/5075ecc3caa6da0caf2d24cdd92f734a.jpg" 
+                             alt="Memory Photo 1" 
+                             class="w-full h-full object-cover filter contrast-105 sepia-[0.15]"
+                             onerror="this.src='https://placehold.co/600x400/d6cbb9/2c2523?text=Philosophy+Photo+1'">
+                    </div>
+                </div>
+                <!-- LANDSCAPE POLAROID 2 -->
+                <div class="polaroid-landscape rotate-3 w-80 md:w-72 z-10" onclick="scrollToSection2()">
+                    <div class="washi-tape"></div>
+                    <div class="overflow-hidden bg-stone-200 h-52 w-full rounded-sm border border-stone-200">
+                        <img src="file:///Users/macbookpro/Downloads/06538d9d1891efa476a7b16cc632ec89%202.JPEG" 
+                             alt="Memory Photo 2" 
+                             class="w-full h-full object-cover filter contrast-105 sepia-[0.15]"
+                             onerror="this.src='https://placehold.co/600x400/d6cbb9/2c2523?text=Philosophy+Photo+2'">
+                    </div>
+                </div>
+                <!-- LANDSCAPE POLAROID 3 -->
+                <div class="polaroid-landscape -rotate-3 w-80 md:w-72" onclick="scrollToSection2()">
+                    <div class="washi-tape"></div>
+                    <div class="overflow-hidden bg-stone-200 h-52 w-full rounded-sm border border-stone-200">
+                        <img src="file:///Users/macbookpro/Downloads/0b333976c266cbecf100d30efa417756.jpg" 
+                             alt="Memory Photo 3" 
+                             class="w-full h-full object-cover filter contrast-105 sepia-[0.15]"
+                             onerror="this.src='https://placehold.co/600x400/d6cbb9/2c2523?text=Philosophy+Photo+3'">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scroll Indicator Button -->
+        <button onclick="scrollToSection2()" class="mt-2 flex flex-col items-center gap-1 text-black hover:text-stone-800 transition-colors group">
+            <span class="text-xs uppercase tracking-widest font-courier text-black font-bold">Scroll to explore!</span>
+            <div class="w-7 h-7 rounded-full border border-black flex items-center justify-center group-hover:bg-amber-100 transition-colors">
+                <i class="fa-solid fa-chevron-down animate-bounce text-xs text-black"></i>
+            </div>
+        </button>
+    </section>
+
+    <!-- SECTION 2: TYPEWRITER ANIMATION & 21 WAX-SEALED ENVELOPES -->
+    <section id="section2" class="pt-4 pb-16 px-4 md:px-8 max-w-6xl mx-auto flex flex-col items-center">
+        
+        <!-- Typewriter Scrapbook Card -->
+        <div id="typewriterCard" class="w-full paper-texture rounded-lg p-5 md:p-8 border border-stone-300 relative mb-8 opacity-0">
+            <!-- Decorative Tape Effect -->
+            <div class="absolute -top-3 left-8 w-20 h-5 bg-amber-200/70 -rotate-2 border-l border-r border-amber-300/80 shadow-sm pointer-events-none"></div>
+            <div class="absolute -top-3 right-8 w-20 h-5 bg-rose-200/70 rotate-3 border-l border-r border-rose-300/80 shadow-sm pointer-events-none"></div>
+            
+            <div class="flex flex-col md:flex-row items-center gap-6">
+                <!-- SVG Typewriter Graphic -->
+                <div class="w-28 md:w-40 flex-shrink-0">
+                    <svg viewBox="0 0 200 160" class="w-full h-auto drop-shadow-md" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="20" y="100" width="160" height="45" rx="6" fill="#3a322d" />
+                        <rect x="30" y="65" width="140" height="40" rx="4" fill="#52463e" />
+                        <rect x="40" y="25" width="120" height="45" fill="#f4efe6" stroke="#c0b298" stroke-width="2" />
+                        <line x1="50" y1="35" x2="150" y2="35" stroke="#887766" stroke-width="2" stroke-dasharray="4 2" />
+                        <line x1="50" y1="45" x2="130" y2="45" stroke="#887766" stroke-width="2" stroke-dasharray="4 2" />
+                        <!-- Keys -->
+                        <circle cx="50" cy="115" r="4" fill="#d6cbb9" />
+                        <circle cx="65" cy="115" r="4" fill="#d6cbb9" />
+                        <circle cx="80" cy="115" r="4" fill="#d6cbb9" />
+                        <circle cx="95" cy="115" r="4" fill="#d6cbb9" />
+                        <circle cx="110" cy="115" r="4" fill="#d6cbb9" />
+                        <circle cx="125" cy="115" r="4" fill="#d6cbb9" />
+                        <circle cx="140" cy="115" r="4" fill="#d6cbb9" />
+                        <circle cx="57" cy="127" r="4" fill="#d6cbb9" />
+                        <circle cx="72" cy="127" r="4" fill="#d6cbb9" />
+                        <circle cx="87" cy="127" r="4" fill="#d6cbb9" />
+                        <circle cx="102" cy="127" r="4" fill="#d6cbb9" />
+                        <circle cx="117" cy="127" r="4" fill="#d6cbb9" />
+                        <circle cx="132" cy="127" r="4" fill="#d6cbb9" />
+                        <rect x="70" y="136" width="60" height="5" rx="2" fill="#d6cbb9" />
+                    </svg>
+                </div>
+                <!-- Live Typing Text Block -->
+                <div class="flex-grow w-full">
+                    <div class="text-[10px] uppercase tracking-widest text-black font-bold mb-1 font-courier">Entry No. 2502 • Class Reflections</div>
+                    <div id="typewriterText" class="font-courier text-black text-sm md:text-base leading-relaxed min-h-[60px] typewriter-cursor"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section Title for Envelopes -->
+        <div class="text-center mb-8">
+            <h2 class="text-3xl md:text-4xl font-bold text-black">Read Me!!</h2>
+            <p class="font-courier text-black font-semibold text-xs md:text-sm mt-1">Select an envelope to unseal and reveal the stories</p>
+        </div>
+
+        <!-- 21 WAX-SEALED ENVELOPES GRID -->
+        <div id="envelopesGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-4 md:gap-5 w-full">
+            <!-- JavaScript dynamically inserts 21 wax-sealed envelopes here -->
+        </div>
+    </section>
+
+    <!-- SECTION 3: ESSAY LETTER MODAL -->
+    <div id="letterModal" class="fixed inset-0 bg-stone-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4 transition-opacity duration-300">
+        <div class="paper-texture max-w-4xl w-full rounded-lg p-6 md:p-12 border border-stone-300 shadow-2xl relative max-h-[88vh] min-h-[60vh] flex flex-col justify-between overflow-y-auto">
+            
+            <div>
+                <!-- Close Modal Button -->
+                <button onclick="closeLetter()" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-stone-200 hover:bg-stone-300 text-stone-700 flex items-center justify-center transition-colors">
+                    <i class="fa-solid fa-xmark text-base"></i>
+                </button>
+                <!-- Header / Stamp Info -->
+                <div class="flex justify-between items-start border-b border-stone-300 pb-5 mb-6 pr-8">
+                    <div>
+                        <span id="modalCategory" class="text-xs font-bold uppercase tracking-widest text-black font-courier">Envelope Entry</span>
+                        <h2 id="modalTitle" class="text-2xl md:text-4xl font-bold text-black mt-1 min-h-[1rem]">Letter Title</h2>
+                    </div>
+                    <!-- Postmark Stamp -->
+                    <div class="w-14 h-16 border-2 border-dashed border-stone-800 bg-amber-50/80 flex flex-col items-center justify-center text-[10px] text-black font-courier -rotate-3 flex-shrink-0 font-bold">
+                        <i class="fa-solid fa-stamp text-stone-800 text-sm mb-1"></i>
+                        <span>12 HUMSS</span>
+                    </div>
+                </div>
+                <!-- Letter Body -->
+                <div id="modalBody" class="font-courier text-black text-base leading-relaxed space-y-4 my-4">
+                    <!-- Essay content injected via JS -->
+                </div>
+                <!-- Dedicated Word Count Container (Lower Part of the Letter) -->
+                <div id="modalWordCount" class="mt-6 pt-3 border-t border-stone-200 text-xs font-courier text-black font-bold tracking-wider">
+                    <!-- Word count injected via JS -->
+                </div>
+            </div>
+            <!-- Letter Signature & Date Footer -->
+            <div class="mt-10 pt-4 border-t border-stone-300 flex flex-col sm:flex-row justify-between items-start sm:items-end gap-2">
+                <div class="text-xs font-courier text-black font-bold uppercase tracking-wider">
+                    Date: <span id="modalDate" class="text-black">September 22, 2026</span>
+                </div>
+                <div id="modalSignature" class="font-courier text-sm md:text-base text-black font-bold uppercase tracking-widest">
+                    BY 12 HUMSS 2502
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        /* =========================================================================
+           DATA MAP FOR 21 ENVELOPES (STRICTLY CABAHUG HAS COLORED FONTS)
+           ========================================================================= */
+        const envelopeData = {
+            1: {
+                id: 1,
+                lastName: "BACULAO",
+                title: "Training or Project, PUMILI KA",
+                date: "September 21, 2026",
+                signature: "Joshua S. Baculao • 12 HUMSS 2502",
+                body: `
+                    <p>A meaningful experience in my life happened when I had to choose between attending my sports training and working on a research project. At that time, our research deadline was at the same day we had to work on it since we had to revise it several times, so our group needed to finish our work as soon as possible. On the same day, I also had a scheduled training for the sport I was practicing. If I went to training first, I would have less time to work on the research, so I decided to prioritize the project. I believed it was the better choice because the deadline was near and I did not want to be a burden my group mates.</p>
+                    <p>I made that decision because I felt like i needed to do this research project. It was not only my work, but our leader and other members were also depending on everyone to contribute their part. I knew that if I did not finish my part on time, i would have small contribution and can affect the progress of the whole group. Because of this, I chose to stay focused on the research instead of going to training at the scheduled time. I know that I could attend another training later or some other day, while a missed deadline would be harder to fix. Even though I wanted to train, I believed that finishing something with an important deadline should come first.</p>
+                    <p>However, my decision also had a consequence I did not expect. When I finally arrived at training, I was already very late. Because of this, I barely got any training time and was not able to spar with anyone other than my coach. I felt disappointed because I had wanted to learn a lot on every session. I realized that choosing one responsibility sometimes means giving up another opportunity, even when both are important to me. At the same time, I was able to contribute to our research project and avoid making the situation more difficult for my fellow group mates.</p>
+                    <p>This experience taught me that freedom of choice does not mean that every decision will have a perfect result but it will also bear consequences no matter how big or small. I was free to choose whether to prioritize my research or my training, but I also had to accept whatever happened because of my decision. It made me realize that having freedom means being responsible for the choices I make instead of blaming other people when things do not go the way I expected. I also learned that making a good decision requires knowing what to prioritize at a certain moment. However, I also learned that I should manage my time better so I do not always have to sacrifice one important responsibility for another.</p>
+                    <p>I think my decision was an important learning experience. I learned that choosing what to prioritize is part of growing up and becoming more responsible. I also learned that even when I make a decision for a good reason, it can still have consequences that I may not like. What matters is that I learn from the result and make better decisions in the future. This experience helped me learn that freedom of choice is not only about doing whatever I want, but about making decisions, accepting their consequences, and learning from them.</p>
+                `,
+                wordCount: 504
+            },
+            2: {
+                id: 2,
+                lastName: "CABAHUG",
+                title: "Beyond the Screen: The Choice to See",
+                date: "Submitted: 9/21/2026",
+                signature: "Cabahug, Frederic L. • 12-HUMSS2502",
+                body: `
+                    <div class="mb-4 text-xs font-bold cabahug-meta uppercase">
+                        Submitted: 9/21/2026 12-HUMSS2502 <br>
+                        Name: Cabahug, Frederic L. <br>
+                        Reflection Title: Beyond the Screen: The Choice to See
+                    </div>
+                    <p class="cabahug-text-blue">The glow of my computer monitor illuminated the walls of my room, casting long shadows as I sat deeply engrossed in developing my latest video game. It was a typical afternoon in my urban neighborhood, and I was comfortably secluded in my own digital world, shaping virtual realities where I controlled every variable. However, the predictable silence of my room was suddenly broken. Faintly at first, and then with growing intensity, I heard a chorus of cheers erupting from a gymnasium situated a bit far from my home. The sound was unusual for that time of day, pulling my attention away from the lines of code on my screen and anchoring me back to the physical world outside my window.</p>
+                    <p class="cabahug-text-teal">At that moment, I was faced with a seemingly mundane choice: I could easily put my headphones back on, ignore the outside world, and continue developing my game in the comfort of my isolation. Alternatively, I could step away from my desk, walk out onto the terrace, and see what the commotion was all about. Up until that point, I had been completely oblivious to anything happening beyond my four walls. Driven by a sudden, nagging curiosity about the unusual noise, I chose the latter. I decided to leave the safety of my virtual environment and walked up to the terrace to check the direction of the cheers.</p>
+                    <p class="cabahug-text-wine">What I expected to see was a celebration; what I witnessed instead was a jarring collision with reality. As I scanned the street below, my eyes locked onto a scene I instantly wished I hadn't looked at—a chaotic traffic accident right in the middle of the urban sprawl. The distant cheers from the gym seemed to evaporate, instantly swallowed by the aggressive honking of cars and the rising panic of the gathering crowd. A tingling, cold fear hit my chest when I looked closer at the scene. Among the people involved, I realized that one of the victims who got hurt was a person with a disability. In that agonizing moment, the lesson was clear and unforgiving: life is incredibly fragile, and no matter how much we try to control our personal bubbles, the unpredictable chaos of the real world is always just one glance away.</p>
+                    <p class="cabahug-text-blue">In the context of the Philosophy of the Human Person, this experience deeply redefined my understanding of the freedom of choice. While choosing to walk to a terrace seems like an incredibly small decision, it highlights a profound philosophical truth: we are always free to choose between comforting ignorance and stark awareness. I had the absolute freedom to remain in my room, blind to the struggles of others, living exclusively for myself and my projects. By choosing to step outside and look, I exercised my freedom to engage with the reality of the human condition. Freedom of choice is not merely about doing whatever we please; it is about the heavy responsibility that comes when our choices force us to confront truths we cannot unsee, shaping our moral conscience in the process.</p>
+                    <p class="cabahug-text-teal">Most importantly, witnessing that vulnerable, disabled individual caught in the crossfire of urban chaos completely shifted my perspective on persons with disabilities (PWDs). While I had the privilege of sitting safely in a secure home, creating games for entertainment, this person was navigating an unforgiving, often inaccessible physical world where a single moment of misfortune could be devastating. This one choice to look over the terrace left a big impact on my heart. It taught me that genuine empathy requires us to step out of our privileged sanctuaries. Moving forward, I am committed to using my freedom of choice not just for personal escape, but to be mindful, aware, and supportive of those who must fight daily battles in a society that too often overlooks them.</p>
+                `,
+                wordCount: 651
+            },
+            3: {
+                id: 3,
+                lastName: "CLARIN",
+                title: "",
+                date: "September 21, 2026",
+                signature: "Anthony Bryan Clarin • HUMSS 12-252",
+                body: `
+                    <p>One of the most meaningful experiences that shaped how I understand freedom, responsibility, and perseverance is the life of my late uncle. He was a survivor of polio, which affected his legs and made it difficult for him to walk and move like other people. Despite this, he never allowed his condition to stop him from living a meaningful life. What inspires me the most is how he chose to focus not on what he could no longer do, but on what he was still capable of doing. He had seven children, and despite the challenges he faced, he worked hard to provide for them and make sure that all seven of them were able to graduate. Seeing how successful his children are today makes me realize how much sacrifice and determination he must have had as a father.</p>
+                    <p>His story also taught me that our freedom to choose comes with responsibility. My uncle could have easily felt defeated because of his disability, but he chose to continue providing for his family and eventually chose to serve his community. He ran for barangay konsehal and was elected for three consecutive terms. For me, that was a powerful example that a person’s disability does not determine their ability to lead or contribute to society. His decision to serve showed that he wanted to use whatever abilities and opportunities he had to help other people. It also changed how I look at persons with disabilities and people from underprivileged sectors. Instead of seeing them based on their limitations, I learned that we should recognize their abilities, experiences, and potential. My uncle proved that being physically limited does not mean being incapable.</p>
+                    <p>Looking back at his life, I realized that freedom is not simply about being able to do whatever we want. It is also about choosing to do what is right even when circumstances are difficult and understanding how our choices affect other people. My uncle’s choices affected not only his own life but also the lives of his seven children and the people in his barangay. Although he is no longer with us, the life he lived continues to inspire me. He showed me that challenges can make life harder, but they do not have to decide our future. His perseverance as a father and his willingness to serve as a leader taught me that we should use our freedom responsibly and never underestimate what a person can achieve just because of a disability.</p>
+                `,
+                wordCount: 418
+            },
+            4: {
+                id: 4,
+                lastName: "DORADO",
+                title: "A bridge between satisfaction and regret",
+                date: "September 20, 2026",
+                signature: "Sebastienne Emmanuel R. Dorado • 12 HUMSS",
+                body: `
+                    <p class="font-bold italic">"Is it better to speak or die?"</p>
+                    <p>That has been the question that's been lingering on my mind till this very day...This particular significant of an event (or in retrospect, a whole new learning experience) taught me you should tell the person to whom you feel any sort of romantic feelings for, that you love them. Now, you're probably wondering why I am even talking about this in the first place. Well, do I have a story to tell for you. So sit back, relax, and maybe get those boxes of tissues ready because this is going to be quite an emotional rollercoaster.</p>
+                    <p>It all happened during grade six, at the peak of COVID19— where everyone was staying at the comfort of their homes, on screens almost every single day, playing online games to still feel that sense of connection digitally. While everyone was doing their own thing, I was talking to the girl I had a crush on since grade four. Let's call her "Julie" for now. Me and Julie had been classmates since grade four up until grade six. We only started actually talking to each other during the pandemic. We were talking to each other almost every single day. We were talking about our day, our interests, the anime that we were currently watching, and many more. We were ironically learning more about each other compared to the past two years of being classmates together. We were just closer than we ever were. Unfortunately, we stopped talking during the summer. There was no bad blood between us, We just stopped talking to each other naturally… The one thing I regret the most not doing was telling her about my feelings. I was actually supposed to confess my feelings to her during Valentine's Day of that year, but there was just that one thought that was holding me back in doing so. I was scared that if I confessed my feelings to her— It would ruin the friendship we had. So I chose not to confess my feelings, and listened to my freedom of choice. Little did I know that it became one of the biggest regrets of my life later on,even looking back at it now. This whole situation made me realize that love should be unapologetic, not logical. That if you really love this person, then you should tell them how you feel before it's too late.. Even if the outcome you get was the one you did not wish for. I can understand how some people may disagree with this because they fear rejection, or detachment from the person they love, and that is totally valid. That was actually how I felt when I was in my train of thoughts whether to confess to her or not, I only realized too soon that it was better to open that jar of feelings, rather than leaving it unopened in a shelf filled with second thoughts.</p>
+                `,
+                wordCount: 471
+            },
+            5: {
+                id: 5,
+                lastName: "ESMERO",
+                title: "Choosing to keep going",
+                date: "September 20, 2026",
+                signature: "Esmero, Christian Anton T. • 12 HUMSS",
+                body: `
+                    <p>One of the most meaningful experiences in my life was the decision I made when I was faced with an important examination that I had been preparing for. I had a goal that I really wanted to achieve and because of that I placed a lot of pressure on myself, I thought that if I worked harder and harder, I would get the results I wanted. However, that experience taught me that not everything in life will give us the outcome we wanted, even when we do and give all our best.</p>
+                    <p>Before the examination, I spent time reviewing and studying, especially my weakest and other subjects I found difficult. I knew that I was not strong on every subject the exam covers, so I tried focusing on my weaknesses. As the exam drew near, I started cramming and began to become more nervous, and started thinking about possible outcomes and whether I would succeed or fail, rather than just staying focused. At that time I was thinking more on the negative side. What would happen if I fail? It was difficult, I never want to disappoint my family, I had prepared for the exam for too long. The way I think of failing is not an option that made me develop a mentally I call the “Do not fail” type of mentality. I worked harder and harder, to prepare myself for the exam, till the point I was no longer being myself, I treated every mistake, every wrong answer from my mock test as something that would bog me down and disqualify me from passing.</p>
+                    <p>During the exam, pressure was at its peak. The exam took 3 hours but it wasn’t enough to answer, and there were questions I found difficult. I had to make a decision to answer blindly or skip the question and move on. I remember feeling frustrated and fatigue, time was ticking too fast. I had to skip some questions, and the more I moved from question to question, it became more difficult, till I became tired and fatigued and couldn't think properly anymore. Then after the final minute, the exam was over.</p>
+                    <p>After the examination, I sat around the campus for a while and started thinking. What happens if I fail? What do I do now? And began daydreaming about possible outcomes. Then the thought of "at least you tried” changed everything for me, because well If I never stepped up, and stayed in my comfort zone, I would have never even tried. I had the choice to decide, and to weigh out the outcome and consequences. But despite facing the fact I cannot control results and no matter how measured and hard I try, it is still not a guarantee that would pass. A failure cannot define a person as long as they persevere.</p>
+                    <p>That experience taught me one thing. We cannot dictate the consequences of our actions, but consequences can dictate us. In the end, we may not be able to control what happens, but we control what we become because of it.</p>
+                `,
+                wordCount: 507
+            },
+            6: {
+                id: 6,
+                lastName: "GONZALEZ",
+                title: "Pag-amgo: An Education in Freedom",
+                date: "September 20, 2026",
+                signature: "Jeremy Daniel B. Gonzalez • 12 HUMSS",
+                body: `
+                    <p class="font-bold italic">“You do not know what freedom is until you are required to use it for someone else.”</p>
+                    <p>In November 2013, Typhoon Yolanda (internationally named ‘Haiyan’) was a long-tracked Super Typhoon that devastated the Philippines, notably Tacloban City, but less so Bogo City, while Cebu City, where I lived, came through with nothing more than strong winds and heavy rain. A few days later, after the typhoon had passed, my parents, along with a few family members, prepared to travel to Northern Cebu with volunteers from a church and asked whether I wanted to come or stay with my grandparents, who were unwell and needed someone nearby. I was still young, and I said yes for reasons that had nothing to do with duty, inasmuch as Northern Cebu was somewhere I had never been, and I simply wanted to see it. I would rather admit that than pretend otherwise. After all, how many of us only confront the suffering of others when it is presented as a curious spectacle rather than a genuine moral obligation? So, the choice was mine: my parents had left it open for me to stay and keep my grandparents company instead. I chose to travel toward the wreckage I did not yet fully understand, not knowing it would become an education in what freedom is for.</p>
+                    <p>My family and I reached a relief post in the mountains outside Bogo City. My own task, most of those two days, was smaller than deciding who received what: carrying canned goods and meal packs from the boxes to the line, usually two or three at a time, and placing them directly into each person's hands, inasmuch as there was never enough to be generous with everyone. I met people who had lost their homes, including fisherfolk who, hungry and starving, arrived with a composure that almost resembled calm, describing their circumstances in ‘subdued’ voices. Carrying ration after ration under a merciless sun left my hands sore, and yet each ration also meant a family leaving that line with enough to outlast the next few days, which mattered more to me than the soreness.</p>
+                    <p>What I witnessed one afternoon made the weight of it clear: a mother, holding barely enough for her own children, dividing her family's relief pack with a neighbor the distribution list had overlooked. No one asked her to. She simply did, though she had little to spare. Why do those with the least often seem to be the quickest to give? Chinese revolutionary Mao Tse Tung once wrote, “The masses are the real heroes, while we ourselves are often childish and ignorant.” Watching her, my own reasons for traveling north suddenly felt exactly that: ‘childish.’ Watching her, I understood, in whatever limited way a child understands anything, that material deprivation did not diminish a person's capacity for generosity or dignity. She also taught me something before I had words for it: that being counted correctly mattered more than I had realized. I did not know yet how soon that idea would matter again. By the next morning I wanted to stay, because helping again no longer felt like curiosity. It felt like ‘responsibility’, consciously chosen. As Jean-Paul Sartre once said, “We are left alone, without excuse,” a statement that reflects a reality that makes our freedom less of a privilege and more of an inescapable obligation to act.</p>
+                    <p>That understanding sharpened further inside a ‘half-roofed’ evacuation center, where I saw a man sitting on a mat near the entrance, his shorts folded and tied off just below where his legs used to be. Being really young, my immediate, unfiltered thought was simply that it looked really ‘weird’. I caught myself staring and immediately looked away in embarrassment. Nobody explained it to me, and I did not ask. I felt unsettled, then guilty for feeling unsettled, insofar as my confusion itself was shameful. I did not have a clean word for that feeling then, and I still, till this day, do not fully have one. To wit, it was not disgust, not quite pity, but something closer to shame mixed with curiosity, the type of ‘feeling’ a child gets when something matters and they do not yet know why. A world leader once wrote in his world-famous manifesto, "Struggle is the father of all things. It is not by the principles of humanity that man lives or is able to preserve himself above the animal world, but solely by means of the most brutal struggle." I later learned neighbors had carried him through the floodwaters, since there was no other way to reach the center.</p>
+                    <p>The food line that day moved in rows across the room, and his mat sat off to the side near the door, half blocked by sacks nobody had moved. I noticed, the way I had with the mother, that volunteers kept passing that corner, not out of cruelty, but by reason of it not being part of the ‘path’ anyone walked. Is neutrality just a quieter form of cruelty? I stood there deciding whether to tell an adult or do it myself, scared of both, scared it was not my job, scared of getting it wrong. I took a meal pack from the case, carried it over without being asked, and set it near his hand instead of holding it out, unsure if that part was even ‘allowed’. He nodded, said thank you, and went back to eating. As Simone Weil once said, “attention is the rarest and purest form of generosity.” I could not know what that small acknowledgement meant to him beyond the food itself, but the calm and simple way he received it, as though being noticed at all was already enough, told me that dignity does not always need grand gestures. Soviet leader Joseph Stalin once said, “a single death is a tragedy, while a million is a statistic.” The same cold math applies to the living. Sometimes dignity is restored simply by being counted as a person, not a name missing from a list. What I understood, even then, was that he had almost been missed for a reason that had nothing to do with him, only with where the room put him. I did not return from Northern Cebu unchanged, even though I was too young to name what had shifted. It has taken me years to understand what I only felt then: in view of the foregoing, responsibility is not about what a society claims to value, but whether the people it is quickest to forget stay protected when everything else falls apart. I went north as a child chasing something new and came back, however unknowingly, with a heart trained to look for the overlooked, and a standard, understood only later, that a choice made in service of another's dignity is one I am obligated to keep living up to, whether that means noticing the classmate left out of a group project or the neighbor left off a barangay list, and refusing to let anyone stay ‘invisible’ because no one thought to look.</p>
+                    <p class="font-italic">"There are risks and costs to action, but they are far less than the long-range risks of comfortable inaction." The floodwaters eventually receded. The physical wreckage was cleared. But the inevitable, subtle disaster of human indifference, continues to remain. I traveled north to exercise a child’s simple freedom to go, only to finally learn what that freedom was actually for. As Martin Luther King Jr. famously challenged, “Life’s most persistent and urgent question is: What are you doing for others?” And I ask you: If your freedom serves only your own comfort, is it liberty, or merely a ‘privilege?’ If a person is rendered invisible by a system, are you complicit when you refuse to step off the path to see them? If human dignity is restored simply by being counted, how many have you passively erased from the room? If the wreckage of another’s life does not demand your attention, what exactly does it take to move you? And if you are not looking for the overlooked, who exactly are you choosing to look away from? The wreckage will eventually clear, but your answer never will.</p>
+                    <p class="text-right font-bold">Non nobis solum nati sumus – Cicero</p>
+                `,
+                wordCount: 1284
+            },
+            7: {
+                id: 7,
+                lastName: "GUMBAN",
+                title: "NA",
+                date: "September 22, 2026",
+                signature: "GUMBAN • 12 HUMSS 2502",
+                body: `<p class="italic text-stone-500">NA</p>`,
+                wordCount: 0
+            },
+            8: {
+                id: 8,
+                lastName: "SO",
+                title: "Zero to Hero",
+                date: "September 22, 2026",
+                signature: "Michael Santino D So • 12 HUMSS",
+                body: `
+                    <p>Once upon a time during my elementary school year I was just a kid in grade 5 who constantly got bullied by my classmates because of being autistic and there was nothing I could do about it as I was simply too weak to fight back.</p>
+                    <p>So COVID 19 started and I was homeschooled, so I was watching some big buff strong muscular dudes lifting heavy ah weights on YT and I saw like my GOAT the incredible Hulk, Superman and Mike Tyson. So I was heavily inspired by them, so I really wanted to workout but instead I was lazy and kept on procrastinating for 3 years straight until I finally decided to lock in with my life in January 27 2023. I did not have any gym equipment or a membership at first so I just looked up on YouTube some calisthenics, I borrowed my dad's 12 pound red dumb bells and I just performed some shadow boxing since I was really weak at that time, I started doing easier variations of the exercises I did like for pushups I did knee pushups and for Pullups I did negative Pullups and I just did some exercises with my dad's dumbells like bicep curls, shoulder press, and squats and I was making some decent progress on my physique so I was lowkey proud of myself and later on I can finally do 10 proper pushups which was a huge accomplishment for me during that time.</p>
+                    <p>I started working even harder on myself because my dad got me some proper gym equipment like a multi purpose bench press, a sandbag, and some weight plates so during that time I was just bulking up to gain weight because weight equals strength and I was 108 pounds at the time which was super small and 1 year later October 28 2024, I decided to test my strength and perform some personal records, so I tried to deadlift 225 pounds which I failed miserably thank goodness there was no huzz watching or I would have been cooked, so I decided to remove some weight plates and now the barbell weights 201 pounds so I deadlifted it and it was a successful lift I was super proud of myself and was happy for the rest of the day.</p>
+                    <p>Fast forward to the start of March 2025 I saw decent progress on my physique I finally got visible abs and I felt like David Laid that day and I attempted some powerlifting lifts and I deadlifted 215 pounds, squatted 180 pounds and I benched 125 pounds which I was very proud of myself during that time and I was even more motivated, so I was working out even more like I was moving like David Goggins and I am now a very good martial artist.</p>
+                    <p class="font-bold">Moral of the story autism is not a disability it is just a different ability so me being bullied for being autistic was like a miracle in disguise which helped me improve my life.</p>
+                `,
+                wordCount: 466
+            },
+            9: {
+                id: 9,
+                lastName: "ZABATE",
+                title: "More Than Just a Meal",
+                date: "September 22, 2026",
+                signature: "Zabate, Marcus C • 12 HUMSS",
+                body: `
+                    <p>Delivering meals brought joy and sadness. The food brought us the opportunity to make an impact and bring people Christmas joy, however it was sad to know many people depend on us to give them a Christmas meal. There were people who looked tired and had very little. Seeing this really made me thankful for the many things I have. I know I'm very blessed and fortunate to have the life I have.</p>
+                    <p>I worked to change my perception toward people who are disadvantaged and other people who are marginalized. I learned I should not make judgments about people based on what I think I know about their circumstances. People have many different circumstances and situations in their life that I can not fully understand.</p>
+                    <p>I started to think about the results of my actions. I had not thought about this before and took action to give out meals on Christmas. I learned that many small acts of kindness and giving can greatly and really impact people and change their day for the better. I learned to not always give large gifts to people to show I care. I took less for granted and gave more in an effort to treat others the way I want to be treated.</p>
+                    <p>This experience showed me that true freedom is not the ability to do as I please. It means having the ability to make choices and being held accountable for the outcomes those choices may have on others. Kindness, compassion and gratitude helped shape my understanding of the choices I made that day. I had the freedom to make the choice to help and I felt it was my duty to use my freedom to serve and protect the rights of others.</p>
+                    <p>I gained a greater appreciation for the 50 Super Meals I gave away that Christmas. Taking part in this project when I was young, humbled me and gave me the opportunity to understand more about suffering. I had the opportunity to shape my future and empower others to shape theirs through small acts of kindness. I found a greater appreciation for the importance of being kind and patient to all, no matter ones social or economic status.</p>
+                `,
+                wordCount: 376
+            },
+            10: {
+                id: 10,
+                lastName: "ARELLANO",
+                title: "NA",
+                date: "September 22, 2026",
+                signature: "ARELLANO • 12 HUMSS 2502",
+                body: `<p class="italic text-stone-500">NA</p>`,
+                wordCount: 0
+            },
+            11: {
+                id: 11,
+                lastName: "ARUTA",
+                title: "Our actions, our choices.",
+                date: "September 20, 2026",
+                signature: "Aruta, Fabei Kirstenn B. • 12 HUMSS",
+                body: `
+                    <p>One experience that I still remember from my Junior High School days was when I witnessed a girl with a disability having a difficult time with a school task. Although it was not a significant matter, I do appreciate the choice I made at that moment and how it affected that girl.</p>
+                    <p>At that time, I was still young, and I was learning how to be more sensitive to the needs of others. When I saw that girl having a hard time in a crowded place where many things were scattered, I felt that I should assist her. However, I hesitated a bit because I did not know how she would react to my offer of help. For a moment, I thought that it would be better to just focus on my own task and leave her alone, hoping that someone would assist her instead.</p>
+                    <p>Nevertheless, the thought of ignoring that girl was quickly replaced with a feeling of responsibility and concern for her. I knew that I would not forgive myself if I just walked away, seeing that she was in need of assistance while I had the opportunity to help. So, I went to her and asked if she needed help, and she agreed. I helped to remove the scattered objects from her way and made sure she could pass.</p>
+                    <p>Although it was a minor thing I did to help, I felt so happy and grateful for what I had done. Moreover, I was satisfied that I did not give up on my initial decision to help that girl. I learned that day that freedom means making your own choices and deciding for yourself. What I did was a wise decision because I followed my own judgment and did what I genuinely wanted to do. I could have ignored that girl and no one would have blamed me for being selfish and self-centered, but I chose to be compassionate and kind.</p>
+                    <p>In addition, my decision was driven by my inner values of being kind and supportive to everyone regardless of their social status, gender, or disability.</p>
+                    <p>I believe that everyone deserves respect, even those who are disabled. Since they are still human beings, they should be treated equally as those who do not have disabilities. I did not want the girl to feel as if she is not worthy or as if her disability defines who she is. Therefore, I respected her by taking care of her needs by removing the obstacles from her way.</p>
+                    <p>Moreover, I believe my experience taught me a valuable lesson about our concept of freedom. We should use our freedom to make our own choices wisely. We should not abuse our freedom to do whatever we want just because we are allowed to.</p>
+                    <p>Furthermore, I learned through that incident that helping people with disabilities is not always about doing big things to prove to them that they are worthy. Sometimes, it could be as simple as providing them with the moral support they need or giving them the required assistance when they ask for it. Helping people with disabilities is a sensitive matter, and we should not treat those disabled people as if they are incompetent. We should not make assumptions about what they can or cannot do. We should treat them as normal human beings who deserve our respect, compassion, and support when it is needed.</p>
+                    <p>Actually, it was also a great lesson about appreciating my own family. Through that incident, I learned that helping disabled people should not be limited to doing big things for them. Sometimes, it could be just small acts of kindness that show them they are cared for and that they are not alone. Furthermore, I learned that helping disabled people makes a great difference in their lives. They are humans just like anyone else, and they deserve to be treated equally.</p>
+                    <p>When I think about the incident, I still find it hard to believe that I actually helped that girl, but I am so glad that I did what I did. It was a great lesson that helped me change my perception about disabled people. I realized through that incident that my freedom does not mean doing whatever I want, whenever I want, but it also means making wise decisions when making a choice between two different options.</p>
+                    <p>It was truly a great experience I had when I was still in Junior High School, and I do believe it had a big impact on my character. It taught me to be a better person who cares about other people’s feelings and a better citizen who respects others. It made me more conscious about my decisions, especially regarding those who are disabled. After all, we should accept that they are human beings just like the rest of us and they deserve to be treated equally. Most importantly, I learned that when we have the ability to help, it is a moral obligation to do so since helping them is sometimes the only thing that can make their day better.</p>
+                `,
+                wordCount: 809
+            },
+            12: {
+                id: 12,
+                lastName: "DELA TORRE",
+                title: "My Lola",
+                date: "September 21, 2026",
+                signature: "Dela Torre, Xeaniel Rose B. • 12 HUMSS",
+                body: `
+                    <p>My Lola was someone I remember finding really cool when I was younger.</p>
+                    <p>Whenever my family visited her home, she would always offer lots snacks to my younger sister and I. She also had a backyard with chickens and stray animals that liked to visit the area to relax. Younger me found it amazing! Like a mini farm! It was one of the many parts of her home that I found really entertaining back then.</p>
+                    <p>But despite the many fond memories I have of my Lola’s home, I struggle to recall any actual conversations that I had with her. She would usually be talking to my parents or her other children. But I don’t think younger me minded that much; I just assumed we would get closer over time.</p>
+                    <p>I don’t remember how it started, but the time for us to get closer eventually happened. Lola started living in our home.</p>
+                    <p>There, lying on a bed in the living room, was my Lola. Unable to stand and walk on her own and was a lot quieter than usual. According to my mother, she had suffered a stroke and was now unable to properly speak. I remember being confused and very surprised. The healthy Lola I had visited just a few months ago was now living with us and very different from how I remembered her to be. My family and I were now in charge of taking care of Lola, ensuring that she lived as comfortably as possible.</p>
+                    <p>I quickly grew used to living with her, and I found myself learning about her many sides. All of which I had never seen before during our visits to her home.</p>
+                    <p>My image of Lola was someone patient, wise, and someone to hold in high regard. So you could only imagine my surprise when I found out she had been hiding the TV remote from my younger sister and me so she could keep watching the shows she liked! Not to mention, the confusion I felt when she would repeatedly nudge me from behind and pretend she didn’t do it! These were only some of the playful and funny sides to her that I happily discovered during the time we spent together.</p>
+                    <p>Of course, there were also sides to my Lola that weren’t always nice.</p>
+                    <p>Times when she would get angry over things, times when she would stubbornly refuse our care, and times when she would quietly cry over things I couldn’t understand. I was just too young to understand. But these moments made even younger me remember that my Lola was a human just like me. Someone who, despite being the strongest person I knew, was pained and frustrated by the situation she was in.</p>
+                    <p>Younger me was never really aware of the true gravity of Lola’s situation. Even when she got diagnosed with tongue cancer, I simply assumed she would get better if we looked after her for longer. The concept of death was foreign to me. While I acknowledged its existence, I never truly understood what it really meant to have someone you love slowly get closer to dying.</p>
+                    <p>Reality started to sink in when I saw Lola getting weaker with each passing day. While death was not the conclusion that came to mind, I realized that my Lola was suffering more as time passed. I decided to put more effort into being there for her. I spent more time with her, laughed with her, and helped my parents take care of her. Using the freedom that I had, I tried my best to make my moments with her memorable, hoping it would make her life feel a bit easier.</p>
+                    <p>After some time, my Lola passed away.</p>
+                    <p>It took me a very long time to fully accept her death. Even today, I still struggle to look back on the times I spent with her without any regrets. But I believe that the time we spent together was not meaningless or only depressing by any means. The experiences and memories I made with her, both good and bad, are ones that I will forever hold close to my heart and cherish dearly.</p>
+                    <p>I learned a lot from my memories with Lola. It's because of her that I'm able to use my free will to offer help and comfort to those that I love. Because of this, she is someone I will always be grateful to have met in my life.</p>
+                `,
+                wordCount: 704
+            },
+            13: {
+                id: 13,
+                lastName: "DICDICAN",
+                title: "One Choice, Big Impact",
+                date: "September 22, 2026",
+                signature: "Lyka Mae Dicdican • 12 HUMSS",
+                body: `
+                    <p>One meaningful experience in my life was when I decided to continue with my studies even when I was already feeling tired and overwhelmed. As a Grade 12 student, there are times when school becomes stressful because of different activities, deadlines, group works, and personal problems. There was a time when I felt like I could not handle everything anymore. I became unmotivated and started questioning if I could really finish everything.</p>
+                    <p>Even though I felt that way, I chose to continue instead of giving up. I made this decision because I knew that stopping would not make my problems disappear. I also thought about my goals and the people who support me. I reminded myself that I did not have to do everything perfectly. I just had to keep trying and take things one step at a time.</p>
+                    <p>This experience also taught me not to judge other people easily. Before, I sometimes thought that people who were not participating or doing well were just lazy. But I realized that we do not know what other people are experiencing.</p>
+                    <p>Some students may be dealing with problems at home, financial difficulties, disabilities, or other struggles that we cannot see.</p>
+                    <p>Because of this, I learned to have more understanding toward persons with disabilities and people from underprivileged communities. They may have fewer opportunities or face challenges that other people do not experience. This made me realize that not everyone starts from the same situation. Sometimes, a choice that seems easy for one person can be difficult for someone else because of their circumstances.</p>
+                    <p>For me, freedom of choice means having the ability to make decisions while also accepting their consequences. I had the freedom to give up, but I also had the freedom to continue. I chose to continue because I knew that my future would also depend on the choices I make today.</p>
+                    <p>Looking back, I am glad that I chose not to give up. This experience taught me that difficult situations can help us become stronger and more understanding. It also showed me that even one decision can make a big difference in how we see ourselves, other people, and our own struggles. I learned that we may not always control what happens to us, but we can still choose how we respond to it.</p>
+                `,
+                wordCount: 393
+            },
+            14: {
+                id: 14,
+                lastName: "GABIA",
+                title: "More Than What the Eyes Can See",
+                date: "September 19, 2026",
+                signature: "Gabia, Shyrinne C. • 12 HUMSS",
+                body: `
+                    <p>An experience that really changed what freedom and responsibility meant to me was when a friend and I were heading back to Cebu City. We had gone home to visit family over Holy Week, which meant the bus terminal was crowded and overwhelming. Many passengers were waiting, and the lines were extremely long. My friend has an autoimmune disease that causes her to get exhausted fast. However, because her condition is not physically obvious, people usually assume that she is completely fine. That day became important to me because I had to choose whether I had to stay quiet and avoid attention or speak up for my friend when she was being unfairly judged.</p>
+                    <p>While we were waiting at the terminal, I could already see that my friend was physically exhausted. The regular line was long, and I was worried that staying there for too long might make her condition worse. She was hesitant to use the PWD area because she was afraid that people might judge her. Since her condition is not visible, she was worried that others would question why she was using a space intended for persons with disabilities. Even so, I encouraged her to go to the PWD area because I knew that she had the right to use the accommodation and because I wanted her to be able to sit and rest while waiting. When we went to the PWD area, a man looked at us and questioned why we were there. He assumed that neither of us had a disability because we looked physically fine. We respectfully explained that my friend had a medical condition and showed her PWD card. However, instead of accepting our explanation, he accused us of using a fake PWD card just to receive discounts and other privileges. His voice became louder, and he called the conductor. The conductor also questioned the validity of the card and accused us of pretending that my friend was a PWD. At that time, I noticed that my friend was getting more anxious, and later she told me that we should leave the PWD area to avoid the attention. I knew I had a choice. I could have stayed silent and walked away with my friend, but I couldn't bring myself to do it. Even though I feared the argument would escalate or that people would judge us, leaving felt wrong.</p>
+                    <p>Thankfully, there was a standby police officer in the area. I explained the whole situation to him. I made sure he understood that we were saying the right thing, that we weren't pulling anything shady, and that my friend's PWD card was not fake. Unlike the others, he listened to us attentively and understood what had happened. He even told us that we could file a report against the man and the conductor. Although we decided not to file one, the situation taught me a lot. It made me realize that not every disability can be seen by our naked eye alone. I knew that people with disabilities can face different challenges, but I did not realize how difficult it could be to have other people question your condition just because you do not look disabled in their judgment.</p>
+                    <p>The situation also made me realize the true meaning of freedom of choice in a more personal way. Before, I mostly thought of freedom as being able to choose whatever I wanted to do. But that incident taught me that freedom always also comes with great responsibility. I had the choice to stay silent because it would have been less embarrassing, but I chose to speak up because I knew my decision could affect my friend. I was terrified I’d mess up and say the wrong thing, only making the whole situation worse. But I also knew that staying quiet means allowing them to continue treating her unfairly. Looking back, that experience taught me to stop judging people by what I see on the surface, because you never know what someone is going through internally. Above all, it changed my understanding of freedom. It isn't just doing whatever you want, it's caring about how your own choices affect others and taking responsibility for the paths you choose to take.</p>
+                `,
+                wordCount: 672
+            },
+            15: {
+                id: 15,
+                lastName: "GALLARDE",
+                title: "NA",
+                date: "September 22, 2026",
+                signature: "GALLARDE • 12 HUMSS 2502",
+                body: `<p class="italic text-stone-500">NA</p>`,
+                wordCount: 0
+            },
+            16: {
+                id: 16,
+                lastName: "LASCUÑA",
+                title: "\"I See You\": Active Freedom",
+                date: "September 20, 2026",
+                signature: "Lascuña, Sophia Gayle P. • 12 HUMSS",
+                body: `
+                    <p class="font-bold">August 13, 2026</p>
+                    <p>Hello blog! Today I wanted to share a little encounter I had while going home.</p>
+                    <p>So here’s what happened. That morning, my parents told me to come home early because they had a business meeting, and my brother would be left alone. So the second our last class ended, I headed straight to the v-hire terminal.</p>
+                    <p>While I was waiting in line, I noticed a man from the corner of my eye. He kept hesitating, like he wanted to approach me but wasn’t sure. Honestly, I was hesitating too. Should I ask if he needed something, or wait for him to make the first move? Before I could decide, he tapped my shoulder and pointed at his phone. The screen read “Cordova?”</p>
+                    <p>I recognized him right away. He’s the deaf worker at Orange Brutus. So I nodded, no hesitation, and smiled. He nodded back and smiled too.</p>
+                    <p>A few minutes later, a guy and his friend came up to him, asking where this line was going. He motioned that he was deaf, so I stepped in and answered for him. Then, less than five minutes later, a girl asked if this was the line for the Cordova v-hire. Again, he motioned that he was deaf. Again, I stepped in.</p>
+                    <p>Then came the moment that stuck with me. A woman in her fifties approached him and asked, in Tagalog, where this line was going. I froze for a second.</p>
+                    <p>…Not because I didn’t understand her. I did. But because I wasn’t the best at speaking Tagalog, and I knew whatever came out of my mouth might not sound smooth.</p>
+                    <p>Still, I stepped in anyway and said, “Hindi po, para Cordova po to.” She nodded and started ranting about how she couldn’t find the line for Danao. So I pointed her in the right direction and told her where to go. She said “salamat” and walked off.</p>
+                    <p>And you know what? I could've just stood there and let things happen. Nobody would've blamed me. But I thought about what it must feel like to be the deaf worker at Orange Brutus, going through this every single day. People not knowing how to talk to him. People getting impatient. People assuming things about him. And then I thought about that woman, probably tired and confused, in a place she didn't know well, having to ask strangers for help.</p>
+                    <p>Looking back, I didn't just help one person that day. I helped the deaf worker every time someone asked him a question. I helped the guy and his friend, and the girl, by answering for him so they didn't have to struggle. And I helped the woman find her way to Danao, even when I was scared my Tagalog wouldn't come out right.</p>
+                    <p>That day, I realized something. Freedom isn't just about doing what you want. It's about noticing when someone needs help and choosing to be the one who gives it. I didn't have to help. But I did. And that choice felt bigger than just answering a few questions. It felt like I was saying, "I see you, and you matter." A little dramatic, but that’s how I truly feel.</p>
+                    <p>Helping doesn't have to be grand. It can be as simple as answering a question, pointing someone in the right direction, or speaking up for someone who can't. And the more I think about it, the more I realize that my freedom is at its best when I use it for other people.</p>
+                `,
+                wordCount: 529
+            },
+            17: {
+                id: 17,
+                lastName: "LUYAO",
+                title: "Learning to Be Grateful",
+                date: "September 21, 2026",
+                signature: "Luyao, Samantha Haze P. • 12 HUMSS",
+                body: `
+                    <p>One meaningful experience I had was when I went to Sto. Niño a few weeks ago. I saw many kids on the street asking for food. Seeing them begging for food made me sad because I realized that not all children have enough food to eat everyday. It also made me think about how lucky I am because I have food to eat at home.</p>
+                    <p>When I saw the kids, I decided to give them some bread. I did not have a lot to give, but I still wanted to help. I knew that the bread would not be enough to solve all their problems, but I thought that giving them something was better than doing nothing. I chose to help because I wanted to share what I had with them, even if it was only a small amount.</p>
+                    <p>When I gave them the bread, I noticed that they were still very thankful. Even though the food was not enough, they were happy to receive it. Their reaction really stayed in my mind. It made me realize that sometimes I complain about food or do not think much about it because I am used to having enough. For these kids, even a small piece of bread could make them happy.</p>
+                    <p>This experience also helped me understand people who do not have much. Before, I knew that some people were poor, but seeing the kids on the streets made me understand it more. I realized that we should not judge people because of their situation. We do not know what they are going through or why they are living that way. Sometimes, they just need someone to show them kindness and care.</p>
+                    <p>In the end, the experience taught me a very important lesson: I should be grateful for what I have. Giving bread to the kids may seem like a small thing, but it changed the way I think. I learned to appreciate the food I eat, my home, and the people who take care of me. I also learned that helping others does not always need to be something big. Even a small act, like giving food to someone who is hungry, can make a difference.</p>
+                    <p>This experience reminded me that I have many things to be thankful for. It also taught me that whenever I have the chance to help someone, I should try to do so. I may not be able to help everyone, but I can always start with something small.</p>
+                `,
+                wordCount: 423
+            },
+            18: {
+                id: 18,
+                lastName: "O'BRIEN",
+                title: "One Choice, A Lesson That Shaped Me",
+                date: "September 20, 2026",
+                signature: "O’Brien, Yohanna, R. • 12 HUMSS",
+                body: `
+                    <p>One meaningful experience that shaped me into who I am today was when I was young I entered a relationship assuming that it was genuine and healthy. During that time, I was immature, naive, and young. I lacked experience to truly understand romantic relationships or recognize something that genuinely seemed good, and then it eventually became an unhealthy and toxic relationship. I genuinely cared about the person, and my motivation for staying was the happiness and connection I felt in the relationship. I believed that if I cared about someone, I should remain loyal and committed to them. Because of this, I held on even when things slowly began to change.</p>
+                    <p>My decision to enter and continue that relationship was on my own accord— no influence, just my own naive perception. I freely chose it because I believe it was what would make me happy. At that time, my values of love, loyalty, trust, and commitment strongly guided my actions. I wanted to be someone who did not easily give up on a person I cared about. However, because I was still young and immature, I did not yet understand that being loyal to someone should not mean ignoring my own well-being or accepting situations that were becoming unhealthy. Yet, I once allowed my emotions to influence my decisions more than my ability to understand what’s truly good for me.</p>
+                    <p>As time passed by, the relationship became toxic. What once I believed was love and happiness, eventually became a source of emotional difficulty. I realized that caring for someone doesn’t mean the relationship becomes healthy. This was difficult for me to accept and understand because I had already become emotionally attached. My naive thoughts wanted me to believe that things would eventually return to how they were in the beginning, so I continued holding on— even if it felt like holding on thorns. Looking back, I realized that my young self was not intentionally making bad decisions. I simply did not have the maturity and experience to understand situations clearly.</p>
+                    <p>My family was also against the relationship and this became one of the biggest consequences of my decisions. Their concerns caused conflicts between us because I felt that they did not completely understand what I experienced. I eventually realized that their disagreement came from their concern for me. They could see things that I was too emotionally attached to notice. My decisions created consequences more than just within myself. It created tension within my family and caused me to experience emotional struggles that I could have avoided if I had listened more carefully to the people who cared about me.</p>
+                    <p>Today, I understand that freedom is not simply having the ability to choose whatever we want. Freedom also requires responsibility. Making decisions is easy, but facing unexpected consequences makes it uncomfortable. I learned that responsibility means being honest with our choices, recognizing when something is harming us, and having the courage to face the reality and make reasonable choices. In addition, I learned that making mistakes does not make a person incapable of growing. Sometimes, mistakes become lessons that helps us grow and shapes us to a better version of ourselves.</p>
+                    <p>Furthermore, this experience changed the way I see people that are unknowingly struggling. When I was facing difficulties, there were parts of me that other people could not immediately see or understand. Because of this, I became more aware that people may carry heaviness that are not visible from the outside. This helped me develop greater empathy towards people from marginalized and underprivileged sectors, including persons with disabilities. Although my experience was not directly about disability, it taught me the importance of looking beyond a person’s situation instead of immediately judging them. They deserve patience , respect, understanding, and opportunities to participate fully in society. My experience reminded me that compassion begins when we try to understand what another person may be experiencing rather than assuming that we already know their story.</p>
+                    <p>Looking back, I do not consider this experience meaningful because the relationship itself was good. I consider it meaningful because of the lessons it taught me, I learned that love and loyalty are valuable, only when it is accompanied by self-respect, wisdom, and responsibility. I learned to listen to the people who genuinely care about me, and to think about the consequences of my choices instead of allowing my emotions to decide everything.</p>
+                    <p>I may not able to change the choice I once made— I was naive and immature, and yet I’m now willing to learn on how to understand myself and other people. That past experience shaped me into a more thoughtful and empathetic person. It taught me that choices carries consequences, and that freedom should be used with responsibility. Most importantly, it taught me to become more understanding of people who face struggles, including persons with disabilities and those from underprivileged sectors. I may not be able to change the past, but I can use what I learned from it to make better choices and treat others with greater compassion in the future.</p>
+                `,
+                wordCount: 821
+            },
+            19: {
+                id: 19,
+                lastName: "POTOT",
+                title: "My Donation Experience: Learning to Let Go of Things to Help Others",
+                date: "September 21, 2026",
+                signature: "Juryce Hope C. Potot • 12 HUMSS",
+                body: `
+                    <p>I have experience where I sometimes donate to other people. When I was in my previous school, my school hosted donation drives for school events once or twice a school year. Students were given a list of things to donate, like old clothes, school supplies, toiletries, etc. After the deadline, the school collected the donations and distributed them to an underprivileged community in a nearby barangay. Depending on the event, usually during Christmas, students get to see the recipients, but not always.</p>
+                    <p>Although participation in the donations was required because it was a graded school activity, I had the freedom to choose how I would participate in this activity. When I chose my donations, I picked ones that were from the list, and when it came to giving away old belongings, I picked ones that were in decent condition and good for someone to use. Sometimes when I let go of some of my belongings, it's hard to let go because I had moments of using them, even though I don't use them as much as before. I remind myself that maybe there could be someone else who can use those items, especially if they have fewer resources than I did.</p>
+                    <p>Donating resources made me think that not everyone has access to as many resources as I do. There are some people who don't have a lot of access to clothes, school supplies, and other necessities. This changed the way I view my own belongings because it made me realize that sharing is caring. It also makes me appreciate of what I already have.</p>
+                    <p>Even though I have the freedom to choose what belongings to keep and give away, it comes with responsibility because of how my choices can affect other people who receive the belongings when I give them away. I am responsible for choosing things that are in decent condition and are good to use, and I usually think about how the person who receives the item will use it. Even though the donations are required for a school event, I chose to participate more meaningfully rather than doing it for grades.</p>
+                    <p>As I think of this experience, I learned to let go of things, even though I have memories of using them, and that maybe other people can use them more than I do. I also realized that not everyone has as many things as I do and that this makes me appreciate the things that I already own. I also learned that when I have a choice to donate, freedom means having my own choices, but it doesn't mean that I don't have consequences to my choices. Every choice I make has a consequence, like having to let go of things that I give away. When I make choices, I am also responsible for checking if the items are in good condition before giving them away. When I donate, I do it not only because others need more resources but because I get to understand other people's experiences and perspectives. Overall, my choices do have meaning, even when an activity is needed for a school event.</p>
+                `,
+                wordCount: 520
+            },
+            20: {
+                id: 20,
+                lastName: "SELMA",
+                title: "A Choice That Taught Me What Freedom Means",
+                date: "September 18, 2026",
+                signature: "SELMA • 12 HUMSS 2502",
+                body: `
+                    <p>I would like to share with you an experience from my life that taught me a lesson concerning freedom of choice. The event took place last year, while I was in my first year of senior high school. I met a group of classmates that I grew extraordinarily close to. We would hang out together in class, make comments to each other, and talk to each other after school. We were closer than ever a few months ago. We talked to each other daily and made plans together. I had so much fun being a part of that circle of friends. However, that all changed, and fast.</p>
+                    <p>Communication with these people began to slow down for me. Our group chat became silent and empty. Everyone was growing distant and busier with their own life, and the invitations stopped flowing my way. It didn’t bother me at first; I told myself that everyone is facing their own set of circumstances in life. Nonetheless, the realistic part of me knew that we were growing far, and I was doing nothing about it. I had a choice to make: I could either choose to reach out and express my interest in hanging out with them, or I could allow our friendship to drift away and pretend that it never mattered to me in the first place.</p>
+                    <p>The choice that I made was the cowardice one, and I have regretted it to this very day. I chose the path of least resistance and let the friendship go. It was a difficult choice to make, and I do not blame anyone for my decision.</p>
+                    <p>I chose to walk away because I was afraid of feeling desperate and lonely. I feared feeling like a bother to them and being the kind of friend that they did not deserve. Therefore, it was easier to walk away and allow the friendship to dissolve rather than to look desperate and annoying. I do not think that anyone would have disowned me if I had chosen to ask for their help in saving the friendship, but it was that kind of fear that drove me to let the friendship drift away.</p>
+                    <p>It came with painful consequences for me as time went by. The people that I grew incredibly close to were now complete strangers to me. Although we sat in the same classes together, the most that we did was greet each other with a wave or a short comment. I have come to terms with the fact that relationships require both parties to contribute to their sustenance. My biggest lesson was that it was not enough to only ask for help, support, or even money. It is also necessary to provide the help, support, or encouragement that someone is in need of, even if it is not in the most convenient of times. The worst part of the entire experience is that I knew that I let the friendship dissolve because I feared feeling desperate and lonely.</p>
+                    <p>The experience has taught me that freedom of choice is a matter of having the courage to choose what one desires most in life. Freedom of choice entails the power to choose between various alternatives, which often present themselves with a mixture of good and bad consequences. My perception of freedom has changed, for the better, since then. It has become more apparent to me that freedom of choice also involves choosing between alternatives that are difficult to deal with in the long run. I may have had the freedom to choose to save the friendship, but I had the responsibility to make that choice and to deal with its consequences.</p>
+                    <p>The experience has also taught me to cherish my friends and family more. I have gained a new perspective on the kind of behavior that makes people feel appreciated or unappreciated. I have learned that everyone, including those that I perceive as disabled or less fortunate, feels the need to be a part of a community just like anyone else. I will always strive to be a responsible member of my society because I do not want to be the cause of despair in the life of another person. I am confident that the experience has taught me the best lesson that it could possibly teach me: the kind of choice that one makes when no one is looking defines who one is and what one stands for. Freedom of choice should not be used as a license for doing whatever one pleases in life. Instead, it should be used as a regulatory mechanism for making decisions that make life meaningful. I have learned a great lesson from that experience in my life, and I will forever cherish the painful consequences that came with it. I have learned that the people that I care about and the ones that care about me are worth fighting for.</p>
+                `,
+                wordCount: 785
+            },
+            21: {
+                id: 21,
+                lastName: "YBAÑEZ",
+                title: "The Value of Helping Others During Difficult Times",
+                date: "September 20, 2026",
+                signature: "Ellona M. Ybañez • 12 HUMSS",
+                body: `
+                    <p class="italic font-bold">“There are eight family members who were announced to be positive here in this barangay.”</p>
+                    <p>One of the most meaningful experiences I had was during the COVID-19 pandemic, when our family was suddenly placed under quarantine and our house was cordoned off because one of our family members was reported to be positive for COVID-19, even though that person was actually not positive. It was a difficult and unexpected situation for us because everything happened so suddenly. There were police officers outside our house, and because we were suddenly required to stay inside, we were not prepared with enough food and other basic necessities.</p>
+                    <p>At that time, I remember how helpless and worried our family felt. We could not simply go outside to buy food or get the things that we needed because we were required to stay inside. We also did not know how long the situation would last. It was a challenging experience because something as simple as getting food became difficult. We had no choice but to depend on other people for some of our basic needs.</p>
+                    <p>Fortunately, our fellow neighbors helped us during that difficult time. They gave us food and other things that our family needed while we were quarantined. Their help meant a lot to us because they did not have to do those things for us. They could have simply minded their own business, especially since everyone was afraid of COVID-19 at that time. However, they still chose to help despite the situation.</p>
+                    <p>This experience made me realize the importance of freedom of choice. The people who helped us had a choice whether to help or not. They were not forced to give us food or assist our family. They chose to help because they understood that we were in a difficult situation. Their choice had a positive consequence because it helped our family get through a stressful and uncertain time. It also showed me that even a simple act of kindness can have a meaningful impact on someone who is struggling.</p>
+                    <p>What made the experience even more meaningful was what happened after our quarantine. When another family in our neighborhood was placed under quarantine, we also chose to help them. Since we had experienced being in their situation, we understood how difficult it could be to suddenly lose the freedom to go outside and provide for your own needs. We wanted to extend to them the same kindness that our neighbors had shown us. In a way, the help we received became something that we could also give to someone else.</p>
+                    <p>Aside from our neighbors, we also witnessed how the barangay and other people in the community helped families who were affected by the pandemic. This made me appreciate people who were willing to help others, especially those who were already struggling financially or had limited resources. During the pandemic, not everyone had the same ability to prepare for emergencies. Some families had difficulty getting food and other basic necessities, so community support became very important.</p>
+                    <p>This experience also taught me to be more understanding toward people from underprivileged sectors of society. Before the pandemic, I may not have fully understood how difficult it was for some people to meet their basic needs. Experiencing quarantine ourselves gave me a small understanding of what it feels like to depend on others during a difficult situation. It reminded me that we should not immediately judge people who need help because we may not know what they are going through.</p>
+                    <p>Most importantly, I learned that our choices do not only affect ourselves. A choice to help someone can encourage others to do the same. In our case, our neighbors chose to help our family when we needed it, and later, we chose to help another family when they experienced a similar situation. The experience showed me that kindness can be passed from one person to another.</p>
+                    <p>Looking back, I am grateful that although the pandemic brought fear, uncertainty, and difficulties to our family, it also allowed me to see the goodness of people around us. I learned to appreciate the people who are willing to help others without expecting anything in return. It taught me that having the freedom to choose also comes with the responsibility to consider how our choices can affect other people. Sometimes, choosing to help, even in a simple way, can make someone's difficult situation a little easier.</p>
+                `,
+                wordCount: 712
+            }
+        };
+
+        // Render 21 wax-sealed realistic envelopes into the grid
+        function renderEnvelopes() {
+            const grid = document.getElementById("envelopesGrid");
+            grid.innerHTML = "";
+            for (let i = 1; i <= 21; i++) {
+                const item = envelopeData[i];
+                const envelopeDiv = document.createElement("div");
+                envelopeDiv.className = "realistic-envelope flex flex-col justify-between p-2 text-center shadow-md";
+                envelopeDiv.onclick = () => handleEnvelopeClick(i);
+                envelopeDiv.innerHTML = `
+                    <div class="text-[8px] uppercase font-bold tracking-tighter text-black z-10 pt-0.5 font-courier">
+                        No. ${i}
+                    </div>
+                    <!-- 3D Red Wax Seal with Heart Motif -->
+                    <div class="wax-seal">
+                        <i class="fa-solid fa-heart"></i>
+                    </div>
+                    <div class="text-[9px] font-bold text-black z-10 truncate pb-0.5 px-1 bg-stone-100/80 rounded font-courier uppercase tracking-wider">
+                        ${item.lastName}
+                    </div>
+                `;
+                grid.appendChild(envelopeDiv);
+            }
+        }
+
+        // Handle Envelope Click (Opens Essay Modal)
+        function handleEnvelopeClick(id) {
+            const data = envelopeData[id];
+            if (!data) return;
+            
+            // Populate Modal Fields
+            document.getElementById("modalCategory").innerText = `Envelope No. ${id} • ${data.lastName}`;
+            
+            const modalTitleEl = document.getElementById("modalTitle");
+            modalTitleEl.innerText = data.title;
+            // Apply Cabahug Title Color strictly if Cabahug
+            if (id === 2) {
+                modalTitleEl.className = "text-2xl md:text-4xl font-bold cabahug-title mt-1 min-h-[1rem]";
+            } else {
+                modalTitleEl.className = "text-2xl md:text-4xl font-bold text-black mt-1 min-h-[1rem]";
+            }
+
+            document.getElementById("modalDate").innerText = data.date || "September 22, 2026";
+            
+            const modalSigEl = document.getElementById("modalSignature");
+            modalSigEl.innerText = data.signature;
+            if (id === 2) {
+                modalSigEl.className = "font-courier text-sm md:text-base cabahug-signature uppercase tracking-widest";
+            } else {
+                modalSigEl.className = "font-courier text-sm md:text-base text-black font-bold uppercase tracking-widest";
+            }
+
+            document.getElementById("modalBody").innerHTML = data.body;
+            
+            // Populate Word Count in Lower Part of Letter
+            const wcContainer = document.getElementById("modalWordCount");
+            if (data.wordCount > 0) {
+                wcContainer.innerText = `WORD COUNT: ${data.wordCount} WORDS`;
+                wcContainer.style.display = "block";
+            } else {
+                wcContainer.innerText = `WORD COUNT: N/A`;
+                wcContainer.style.display = "block";
+            }
+            // Show Modal
+            const modal = document.getElementById("letterModal");
+            modal.classList.remove("hidden");
+        }
+
+        function closeLetter() {
+            document.getElementById("letterModal").classList.add("hidden");
+        }
+
+        // Typewriter Animation Script
+        const typewriterText = "Welcome to our 12 HUMSS 2502 digital diary! Our life is shaped by the choices we make, each carrying lessons about responsibility, empathy, and the impact of our actions on others. This blogsite brings together personal reflections of our freedom, its consequences, and the importance of understanding ourselves and those around us.";
+        let charIndex = 0;
+        let isTypingStarted = false;
+
+        function startTypewriter() {
+            if (isTypingStarted) return;
+            isTypingStarted = true;
+            
+            const container = document.getElementById("typewriterText");
+            container.innerHTML = "";
+            function typeNextChar() {
+                if (charIndex < typewriterText.length) {
+                    container.innerHTML += typewriterText.charAt(charIndex);
+                    charIndex++;
+                    const speed = Math.floor(Math.random() * (50 - 20)) + 20;
+                    setTimeout(typeNextChar, speed);
+                }
+            }
+            typeNextChar();
+        }
+
+        // Smooth scroll helper
+        function scrollToSection2() {
+            document.getElementById('section2').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Scroll observer for entrance animation
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const card = document.getElementById('typewriterCard');
+                    if (card) {
+                        card.classList.add('animate-scrapbook-up');
+                        card.classList.remove('opacity-0');
+                    }
+                    setTimeout(startTypewriter, 300);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        // Initialize on load
+        window.onload = function() {
+            renderEnvelopes();
+            const target = document.getElementById('section2');
+            if (target) observer.observe(target);
+        };
+    </script>
+</body>
+</html>
